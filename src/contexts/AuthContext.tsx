@@ -40,6 +40,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Routes that don't require authentication
 const publicRoutes = [
+  "/", // Landing page is public
   "/auth/login",
   "/auth/register",
   "/auth/forgot-password",
@@ -159,8 +160,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (isLoading) return;
 
-    const isPublicRoute = publicRoutes.some((route) =>
-      pathname?.startsWith(route),
+    const isPublicRoute = pathname === "/" || publicRoutes.some((route) =>
+      route !== "/" && pathname?.startsWith(route),
     );
 
     const isAuthRoute = authOnlyRoutes.some((route) =>
@@ -171,8 +172,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Not authenticated and trying to access protected route
       router.push("/auth/login");
     } else if (user && isAuthRoute) {
-      // Authenticated and trying to access auth pages (not docs)
-      router.push("/");
+      // Authenticated and trying to access auth pages — go to dashboard
+      router.push("/dashboard");
     }
   }, [user, isLoading, pathname, router]);
 
@@ -221,7 +222,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           const policyData = await policyResponse.json();
           if (!policyData.policies_accepted) {
             // User needs to accept updated policies
-            router.push("/auth/accept-policies?return=/");
+            router.push("/auth/accept-policies?return=/dashboard");
             return;
           }
         }
@@ -230,7 +231,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         console.error("Policy check failed:", policyError);
       }
 
-      router.push("/");
+      router.push("/dashboard");
     },
     [API_URL, router],
   );
@@ -280,7 +281,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setToken(null);
       setRefreshTokenValue(null);
       setUser(null);
-      router.push("/auth/login");
+      router.push("/");
     }
   }, [API_URL, token, router]);
 

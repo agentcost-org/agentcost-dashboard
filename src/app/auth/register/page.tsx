@@ -14,6 +14,7 @@ import {
   Check,
   X,
   ExternalLink,
+  ArrowRight,
 } from "lucide-react";
 import { parseApiError } from "@/lib/utils";
 import { Checkbox } from "@/components/auth/AuthComponents";
@@ -24,10 +25,10 @@ interface PasswordRequirement {
 }
 
 const passwordRequirements: PasswordRequirement[] = [
-  { label: "At least 8 characters", test: (p) => p.length >= 8 },
-  { label: "One uppercase letter", test: (p) => /[A-Z]/.test(p) },
-  { label: "One lowercase letter", test: (p) => /[a-z]/.test(p) },
-  { label: "One number", test: (p) => /[0-9]/.test(p) },
+  { label: "8+ characters", test: (p) => p.length >= 8 },
+  { label: "Uppercase", test: (p) => /[A-Z]/.test(p) },
+  { label: "Lowercase", test: (p) => /[a-z]/.test(p) },
+  { label: "Number", test: (p) => /[0-9]/.test(p) },
 ];
 
 export default function RegisterPage() {
@@ -42,7 +43,6 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  // Policy consent state
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [acceptPrivacy, setAcceptPrivacy] = useState(false);
   const [policyVersions, setPolicyVersions] = useState({
@@ -50,7 +50,6 @@ export default function RegisterPage() {
     privacy: "1.0",
   });
 
-  // Fetch current policy versions on mount
   useEffect(() => {
     const fetchPolicyVersions = async () => {
       try {
@@ -65,7 +64,6 @@ export default function RegisterPage() {
           });
         }
       } catch {
-        // Use default versions if fetch fails
         console.error("Failed to fetch policy versions, using defaults");
       }
     };
@@ -137,63 +135,64 @@ export default function RegisterPage() {
 
   if (success) {
     return (
-      <div className="w-full max-w-sm px-4 py-8 text-center">
-        <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-8 ring-4 ring-green-500/20">
-          <Check className="w-10 h-10 text-green-500" />
+      <div className="w-full max-w-100 px-6 py-16 text-center">
+        <div className="w-16 h-16 bg-emerald-500/10 rounded-2xl flex items-center justify-center mx-auto mb-8 ring-1 ring-emerald-500/20">
+          <Check className="w-8 h-8 text-emerald-400" />
         </div>
-        <h1 className="text-2xl font-semibold text-white mb-3">
+        <h1 className="text-[1.75rem] font-semibold tracking-tight text-white mb-3">
           Check your email
         </h1>
-        <p className="text-gray-400 mb-8 leading-relaxed">
-          We have sent a verification link to{" "}
-          <span className="text-white font-medium">{email}</span>. Please check
-          your inbox and click the link to verify your account.
+        <p className="text-neutral-500 text-[15px] mb-10 leading-relaxed max-w-xs mx-auto">
+          We&apos;ve sent a verification link to{" "}
+          <span className="text-white font-medium">{email}</span>. Click the
+          link to activate your account.
         </p>
         <Link
           href="/auth/login"
-          className="inline-flex items-center justify-center bg-white hover:bg-gray-100 text-slate-900 font-medium py-3 px-8 rounded-xl transition-colors shadow-lg shadow-white/10"
+          className="group inline-flex items-center justify-center gap-2 bg-white hover:bg-neutral-100 text-[#0a0a0b] font-semibold py-3 px-8 rounded-xl transition-all duration-200 shadow-[0_1px_20px_rgba(255,255,255,0.06)]"
         >
-          Go to Login
+          Continue to sign in
+          <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" />
         </Link>
-        <p className="mt-6 text-sm text-gray-500">
-          Didn&apos;t receive the email? Check your spam folder.
+        <p className="mt-8 text-[13px] text-neutral-600">
+          Didn&apos;t receive it? Check your spam folder.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="w-full max-w-sm px-4 py-12">
+    <div className="w-full max-w-100 px-6 py-16">
       {/* Header */}
-      <div className="text-center mb-8">
-        <h1 className="mt-45 text-2xl font-semibold text-white mb-2">
+      <div className="mb-10">
+        <h1 className="text-[1.75rem] font-semibold tracking-tight text-white mb-2">
           Create your account
         </h1>
-        <p className="text-gray-400 text-sm">
-          Start tracking your AI costs today
+        <p className="text-neutral-500 text-[15px]">
+          Start tracking your AI costs in minutes
         </p>
       </div>
 
-      {/* Google Sign Up Button */}
+      {/* Google Sign Up */}
       <button
         type="button"
-        className="w-full flex items-center justify-center gap-3 bg-transparent border border-gray-700 hover:border-gray-600 text-white font-medium py-3 rounded-xl transition-colors mb-6"
+        className="w-full flex items-center justify-center gap-3 bg-white/2 border border-white/8 hover:border-white/15 hover:bg-white/4 text-neutral-300 hover:text-white font-medium py-3 rounded-xl transition-all duration-200"
       >
-        <svg className="w-5 h-5" viewBox="0 0 24 24">
+        <svg className="w-4.5 h-4.5" viewBox="0 0 24 24">
           <path
-            fill="currentColor"
+            fill="#4285F4"
             d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
           />
           <path
-            fill="currentColor"
+            fill="#34A853"
             d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
           />
           <path
-            fill="currentColor"
+            fill="#FBBC05"
             d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
           />
           <path
-            fill="currentColor"
+            fill="#EA4335"
             d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
           />
         </svg>
@@ -201,17 +200,21 @@ export default function RegisterPage() {
       </button>
 
       {/* Divider */}
-      <div className="mb-6 flex items-center">
-        <div className="flex-1 border-t border-gray-800"></div>
-        <span className="px-4 text-sm text-gray-500">or</span>
-        <div className="flex-1 border-t border-gray-800"></div>
+      <div className="my-7 flex items-center gap-4">
+        <div className="flex-1 h-px bg-white/6" />
+        <span className="text-xs font-mono text-neutral-600 uppercase tracking-wider">
+          or
+        </span>
+        <div className="flex-1 h-px bg-white/6" />
       </div>
 
-      {/* Error Message */}
+      {/* Error */}
       {error && (
-        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl flex items-start gap-3 text-red-400">
-          <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
-          <span className="text-sm leading-relaxed">{error}</span>
+        <div className="mb-6 p-4 bg-red-500/8 border border-red-500/15 rounded-xl flex items-start gap-3">
+          <AlertCircle className="w-4.5 h-4.5 text-red-400 shrink-0 mt-0.5" />
+          <span className="text-sm text-red-300/90 leading-relaxed">
+            {error}
+          </span>
         </div>
       )}
 
@@ -220,18 +223,19 @@ export default function RegisterPage() {
         <div>
           <label
             htmlFor="name"
-            className="block text-sm font-medium text-gray-300 mb-2"
+            className="block text-[13px] font-medium text-neutral-400 mb-2"
           >
-            Name <span className="text-gray-500">(optional)</span>
+            Name{" "}
+            <span className="text-neutral-600 font-normal">(optional)</span>
           </label>
-          <div className="relative">
-            <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+          <div className="relative group">
+            <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-neutral-600 group-focus-within:text-neutral-400 transition-colors" />
             <input
               id="name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-[#0a0a0b] border border-gray-700/80 rounded-xl pl-11 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 transition-colors"
+              className="w-full bg-white/2 border border-white/8 rounded-xl pl-11 pr-4 py-3 text-[15px] text-white placeholder-neutral-600 focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/10 transition-all duration-200"
               placeholder="Your name"
             />
           </div>
@@ -241,19 +245,19 @@ export default function RegisterPage() {
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-gray-300 mb-2"
+            className="block text-[13px] font-medium text-neutral-400 mb-2"
           >
-            Email
+            Email address
           </label>
-          <div className="relative">
-            <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+          <div className="relative group">
+            <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-neutral-600 group-focus-within:text-neutral-400 transition-colors" />
             <input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-[#0a0a0b] border border-gray-700/80 rounded-xl pl-11 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 transition-colors"
-              placeholder="you@example.com"
+              className="w-full bg-white/2 border border-white/8 rounded-xl pl-11 pr-4 py-3 text-[15px] text-white placeholder-neutral-600 focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/10 transition-all duration-200"
+              placeholder="you@company.com"
               required
             />
           </div>
@@ -263,47 +267,54 @@ export default function RegisterPage() {
         <div>
           <label
             htmlFor="password"
-            className="block text-sm font-medium text-gray-300 mb-2"
+            className="block text-[13px] font-medium text-neutral-400 mb-2"
           >
             Password
           </label>
-          <div className="relative">
-            <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+          <div className="relative group">
+            <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-neutral-600 group-focus-within:text-neutral-400 transition-colors" />
             <input
               id="password"
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-[#0a0a0b] border border-gray-700/80 rounded-xl pl-11 pr-12 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 transition-colors"
-              placeholder="Create a secure password"
+              className="w-full bg-white/2 border border-white/8 rounded-xl pl-11 pr-12 py-3 text-[15px] text-white placeholder-neutral-600 focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/10 transition-all duration-200"
+              placeholder="Create a strong password"
               required
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-400 transition-colors"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-neutral-400 transition-colors"
             >
               {showPassword ? (
-                <EyeOff className="w-5 h-5" />
+                <EyeOff className="w-4.5 h-4.5" />
               ) : (
-                <Eye className="w-5 h-5" />
+                <Eye className="w-4.5 h-4.5" />
               )}
             </button>
           </div>
 
-          {/* Password Requirements */}
+          {/* Password Requirements — compact inline */}
           {password.length > 0 && (
-            <div className="mt-3 grid grid-cols-2 gap-2">
+            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5">
               {passwordRequirements.map((req, index) => {
                 const met = req.test(password);
                 return (
-                  <div key={index} className="flex items-center gap-2 text-xs">
+                  <div
+                    key={index}
+                    className="flex items-center gap-1.5 text-[12px]"
+                  >
                     {met ? (
-                      <Check className="w-3.5 h-3.5 text-green-500" />
+                      <Check className="w-3 h-3 text-emerald-400" />
                     ) : (
-                      <X className="w-3.5 h-3.5 text-gray-500" />
+                      <X className="w-3 h-3 text-neutral-600" />
                     )}
-                    <span className={met ? "text-green-500" : "text-gray-500"}>
+                    <span
+                      className={
+                        met ? "text-emerald-400/80" : "text-neutral-600"
+                      }
+                    >
                       {req.label}
                     </span>
                   </div>
@@ -317,23 +328,23 @@ export default function RegisterPage() {
         <div>
           <label
             htmlFor="confirmPassword"
-            className="block text-sm font-medium text-gray-300 mb-2"
+            className="block text-[13px] font-medium text-neutral-400 mb-2"
           >
             Confirm password
           </label>
-          <div className="relative">
-            <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+          <div className="relative group">
+            <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-neutral-600 group-focus-within:text-neutral-400 transition-colors" />
             <input
               id="confirmPassword"
               type={showConfirmPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className={`w-full bg-[#0a0a0b] border rounded-xl pl-11 pr-12 py-3 text-white placeholder-gray-500 focus:outline-none focus:ring-1 transition-colors ${
+              className={`w-full bg-white/2 border rounded-xl pl-11 pr-12 py-3 text-[15px] text-white placeholder-neutral-600 focus:outline-none focus:ring-1 transition-all duration-200 ${
                 confirmPassword.length > 0
                   ? passwordsMatch
-                    ? "border-green-500/50 focus:border-green-500 focus:ring-green-500"
-                    : "border-red-500/50 focus:border-red-500 focus:ring-red-500"
-                  : "border-gray-700/80 focus:border-gray-500 focus:ring-gray-500"
+                    ? "border-emerald-500/40 focus:border-emerald-500/60 focus:ring-emerald-500/15"
+                    : "border-red-500/40 focus:border-red-500/60 focus:ring-red-500/15"
+                  : "border-white/8 focus:border-white/20 focus:ring-white/10"
               }`}
               placeholder="Confirm your password"
               required
@@ -341,22 +352,24 @@ export default function RegisterPage() {
             <button
               type="button"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-400 transition-colors"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-600 hover:text-neutral-400 transition-colors"
             >
               {showConfirmPassword ? (
-                <EyeOff className="w-5 h-5" />
+                <EyeOff className="w-4.5 h-4.5" />
               ) : (
-                <Eye className="w-5 h-5" />
+                <Eye className="w-4.5 h-4.5" />
               )}
             </button>
           </div>
           {confirmPassword.length > 0 && !passwordsMatch && (
-            <p className="mt-2 text-xs text-red-400">Passwords do not match</p>
+            <p className="mt-2 text-[12px] text-red-400/80">
+              Passwords do not match
+            </p>
           )}
         </div>
 
-        {/* Legal Consent - Terms of Service Checkbox */}
-        <div className="space-y-3 pt-2">
+        {/* Legal Consent */}
+        <div className="space-y-3 pt-1">
           <label className="flex items-start gap-3 cursor-pointer group">
             <div className="mt-0.5">
               <Checkbox
@@ -365,21 +378,20 @@ export default function RegisterPage() {
                 onChange={setAcceptTerms}
               />
             </div>
-            <span className="text-sm text-gray-300 leading-relaxed">
+            <span className="text-[13px] text-neutral-400 leading-relaxed">
               I agree to the{" "}
               <Link
                 href="/terms"
                 target="_blank"
-                className="text-white hover:text-gray-300 inline-flex items-center gap-1"
+                className="text-neutral-300 hover:text-white inline-flex items-center gap-1 transition-colors"
                 onClick={(e) => e.stopPropagation()}
               >
                 Terms of Service
-                <ExternalLink className="w-3 h-3" />
+                <ExternalLink className="w-2.5 h-2.5" />
               </Link>
             </span>
           </label>
 
-          {/* Privacy Policy Checkbox */}
           <label className="flex items-start gap-3 cursor-pointer group">
             <div className="mt-0.5">
               <Checkbox
@@ -388,46 +400,49 @@ export default function RegisterPage() {
                 onChange={setAcceptPrivacy}
               />
             </div>
-            <span className="text-sm text-gray-300 leading-relaxed">
+            <span className="text-[13px] text-neutral-400 leading-relaxed">
               I agree to the{" "}
               <Link
                 href="/privacy"
                 target="_blank"
-                className="text-white hover:text-gray-300 inline-flex items-center gap-1"
+                className="text-neutral-300 hover:text-white inline-flex items-center gap-1 transition-colors"
                 onClick={(e) => e.stopPropagation()}
               >
                 Privacy Policy
-                <ExternalLink className="w-3 h-3" />
+                <ExternalLink className="w-2.5 h-2.5" />
               </Link>
             </span>
           </label>
         </div>
 
-        {/* Submit Button */}
+        {/* Submit */}
         <button
           type="submit"
           disabled={
             isLoading || !allRequirementsMet || !passwordsMatch || !consentGiven
           }
-          className="w-full bg-white hover:bg-gray-100 disabled:bg-white/40 disabled:cursor-not-allowed text-slate-900 font-medium py-3 rounded-xl transition-colors flex items-center justify-center gap-2 shadow-lg shadow-white/10"
+          className="group w-full bg-white hover:bg-neutral-100 disabled:bg-white/30 disabled:cursor-not-allowed text-[#0a0a0b] font-semibold py-3 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_1px_20px_rgba(255,255,255,0.06)]"
         >
           {isLoading ? (
             <>
-              <Loader2 className="w-5 h-5 animate-spin" />
+              <Loader2 className="w-4 h-4 animate-spin" />
               Creating account...
             </>
           ) : (
-            "Create account"
+            <>
+              Create account
+              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+            </>
           )}
         </button>
       </form>
 
       {/* Login Link */}
-      <p className="text-center text-gray-400 mt-8">
+      <p className="text-center text-neutral-500 mt-10 text-[14px]">
         Already have an account?{" "}
         <Link
           href="/auth/login"
-          className="text-white hover:text-gray-300 font-medium transition-colors"
+          className="text-white hover:text-neutral-300 font-medium transition-colors"
         >
           Sign in
         </Link>

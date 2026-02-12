@@ -22,7 +22,7 @@ import {
 import { useState, useEffect, useRef } from "react";
 
 const navigation = [
-  { name: "Overview", href: "/", icon: LayoutDashboard },
+  { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
   { name: "Agents", href: "/agents", icon: Users },
   { name: "Models", href: "/models", icon: Cpu },
   { name: "Events", href: "/events", icon: List },
