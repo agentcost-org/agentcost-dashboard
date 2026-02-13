@@ -31,6 +31,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <script
+          src="https://accounts.google.com/gsi/client"
+          async
+          defer
+        ></script>
+      </head>
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} ${sora.variable} antialiased bg-neutral-950 text-neutral-100`}
       >

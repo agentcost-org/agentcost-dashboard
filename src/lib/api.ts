@@ -328,15 +328,32 @@ class ApiClient {
     ) {
       return "jwt";
     }
-    // Project deletion uses API key (project-level auth)
+    // Project deletion and update now use JWT (ownership via permissions)
     if (endpoint.match(/\/v1\/projects\/[^/]+$/) && !endpoint.includes("/me")) {
-      return "api_key";
+      return "jwt";
     }
     // Analytics, events, optimizations, and project info use API key
     return "api_key";
   }
 
+  // token refresh mutex to prevent concurrent refresh storms
+  private refreshPromise: Promise<boolean> | null = null;
+
   private async tryRefreshToken(): Promise<boolean> {
+    // If a refresh is already in flight, piggyback on it
+    if (this.refreshPromise) {
+      return this.refreshPromise;
+    }
+
+    this.refreshPromise = this._doRefreshToken();
+    try {
+      return await this.refreshPromise;
+    } finally {
+      this.refreshPromise = null;
+    }
+  }
+
+  private async _doRefreshToken(): Promise<boolean> {
     const refreshToken = localStorage.getItem("refresh_token");
     if (!refreshToken) return false;
 

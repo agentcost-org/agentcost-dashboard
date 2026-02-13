@@ -99,6 +99,7 @@ export function Sidebar() {
 
   return (
     <aside
+      aria-label="Main sidebar"
       className={cn(
         "fixed left-0 top-0 z-40 h-screen border-r border-neutral-800 bg-neutral-900/50 backdrop-blur-sm",
         collapsed ? "w-16" : "w-64",
@@ -129,6 +130,7 @@ export function Sidebar() {
           {!collapsed && (
             <button
               onClick={() => setCollapsed(!collapsed)}
+              aria-label="Collapse sidebar"
               className="flex h-8 w-8 items-center justify-center rounded-lg text-neutral-400 hover:bg-neutral-800 hover:text-white"
             >
               <ChevronLeft size={18} />
@@ -140,6 +142,7 @@ export function Sidebar() {
         {collapsed && (
           <button
             onClick={() => setCollapsed(false)}
+            aria-label="Expand sidebar"
             className="flex h-10 items-center justify-center text-neutral-400 hover:bg-neutral-800 hover:text-white border-b border-neutral-800"
           >
             <ChevronRight size={18} />
@@ -237,6 +240,8 @@ export function Sidebar() {
           <div ref={userMenuRef} className="relative">
             <button
               onClick={() => !collapsed && setShowUserMenu(!showUserMenu)}
+              aria-haspopup="true"
+              aria-expanded={showUserMenu}
               className={cn(
                 "w-full flex items-center gap-3 p-2 rounded-lg hover:bg-neutral-800 transition-colors",
                 collapsed && "justify-center",
@@ -270,7 +275,10 @@ export function Sidebar() {
 
             {/* User Dropdown Menu */}
             {showUserMenu && !collapsed && (
-              <div className="absolute bottom-full left-0 right-0 mb-2 bg-neutral-800 border border-neutral-700 rounded-lg shadow-lg overflow-hidden">
+              <div
+                role="menu"
+                className="absolute bottom-full left-0 right-0 mb-2 bg-neutral-800 border border-neutral-700 rounded-lg shadow-lg overflow-hidden"
+              >
                 <div className="px-3 py-2 border-b border-neutral-700">
                   <p className="text-xs text-neutral-400">Signed in as</p>
                   <p className="text-sm text-white font-medium truncate">
@@ -305,6 +313,7 @@ export function Sidebar() {
                 onClick={handleLogout}
                 className="w-full flex items-center justify-center p-2 mt-2 rounded-lg text-neutral-400 hover:bg-red-900/20 hover:text-red-400 transition-colors"
                 title="Sign Out"
+                aria-label="Sign Out"
               >
                 <LogOut size={18} />
               </button>

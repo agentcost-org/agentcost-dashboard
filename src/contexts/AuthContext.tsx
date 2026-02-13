@@ -30,6 +30,7 @@ interface AuthContextType {
     password: string,
     rememberMe?: boolean,
   ) => Promise<void>;
+  googleLogin: (credential: string) => Promise<void>;
   register: (email: string, password: string, name?: string) => Promise<void>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
@@ -236,6 +237,61 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     [API_URL, router],
   );
 
+  const googleLogin = useCallback(
+    async (credential: string) => {
+      const response = await fetch(`${API_URL}/v1/auth/google`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          credential,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.detail || "Google sign-in failed");
+      }
+
+      localStorage.setItem("access_token", data.access_token);
+      if (data.refresh_token) {
+        localStorage.setItem("refresh_token", data.refresh_token);
+        setRefreshTokenValue(data.refresh_token);
+      }
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      setToken(data.access_token);
+      setUser(data.user);
+
+      // Check if user needs to accept updated policies
+      try {
+        const policyResponse = await fetch(
+          `${API_URL}/v1/auth/policies/status`,
+          {
+            headers: {
+              Authorization: `Bearer ${data.access_token}`,
+            },
+          },
+        );
+
+        if (policyResponse.ok) {
+          const policyData = await policyResponse.json();
+          if (!policyData.policies_accepted) {
+            router.push("/auth/accept-policies?return=/dashboard");
+            return;
+          }
+        }
+      } catch (policyError) {
+        console.error("Policy check failed:", policyError);
+      }
+
+      router.push("/dashboard");
+    },
+    [API_URL, router],
+  );
+
   const register = useCallback(
     async (email: string, password: string, name?: string) => {
       const response = await fetch(`${API_URL}/v1/auth/register`, {
@@ -366,6 +422,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     isLoading,
     isAuthenticated: !!user,
     login,
+    googleLogin,
     register,
     logout,
     refreshUser,
