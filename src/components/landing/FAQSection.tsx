@@ -103,75 +103,75 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 
 export function FAQSection() {
     return (
-        <section id="faq" className="relative py-32 border-t border-white/3">
-            <div className="mx-auto max-w-3xl px-6">
-                {/* Centered header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    className="text-center mb-16"
-                >
-                    <p className="text-xs font-mono text-sky-400/80 uppercase tracking-[0.2em] mb-5">
-                        FAQ
-                    </p>
-                    <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                        Frequently asked questions
-                    </h2>
-                </motion.div>
+      <section id="faq" className="relative py-32 border-t border-white/3">
+        <div className="mx-auto max-w-3xl px-6">
+          {/* Centered header */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="text-center mb-16"
+          >
+            <p className="text-xs font-mono text-sky-400/80 uppercase tracking-[0.2em] mb-5">
+              FAQ
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+              Frequently asked questions
+            </h2>
+          </motion.div>
 
-                {/* Categorized accordions */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                    className="space-y-10"
-                >
-                    {faqs.map((group) => (
-                        <div key={group.category}>
-                            <p className="text-xs font-mono text-neutral-600 uppercase tracking-widest mb-4">
-                                {group.category}
-                            </p>
-                            <div className="rounded-xl border border-white/6 bg-[#0b0b0d]/50 px-6">
-                                {group.questions.map((faq) => (
-                                    <FAQItem key={faq.q} q={faq.q} a={faq.a} />
-                                ))}
-                            </div>
-                        </div>
-                    ))}
-                </motion.div>
+          {/* Categorized accordions */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="space-y-10"
+          >
+            {faqs.map((group) => (
+              <div key={group.category}>
+                <p className="text-xs font-mono text-neutral-600 uppercase tracking-widest mb-4">
+                  {group.category}
+                </p>
+                <div className="rounded-xl border border-white/6 bg-[#0b0b0d]/50 px-6">
+                  {group.questions.map((faq) => (
+                    <FAQItem key={faq.q} q={faq.q} a={faq.a} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </motion.div>
 
-                {/* Bottom help line */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3, duration: 0.6 }}
-                    className="mt-12 text-center"
-                >
-                    <p className="text-sm text-neutral-600">
-                        Have another question?{" "}
-                        <Link
-                            href="/docs"
-                            className="text-neutral-400 hover:text-white transition-colors"
-                        >
-                            Read the docs
-                        </Link>
-                        {" · "}
-                        <a
-                            href="https://github.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-neutral-400 hover:text-white transition-colors"
-                        >
-                            Open a GitHub issue
-                            <ArrowRight className="inline size-3 ml-1" />
-                        </a>
-                    </p>
-                </motion.div>
-            </div>
-        </section>
+          {/* Bottom help line */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="mt-12 text-center"
+          >
+            <p className="text-sm text-neutral-600">
+              Have another question?{" "}
+              <Link
+                href="/docs/sdk"
+                className="text-neutral-400 hover:text-white transition-colors"
+              >
+                Read the docs
+              </Link>
+              {" · "}
+              <a
+                href="https://github.com/agentcost-ai/agentcost-sdk/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-neutral-400 hover:text-white transition-colors"
+              >
+                Open a GitHub issue
+                <ArrowRight className="inline size-3 ml-1" />
+              </a>
+            </p>
+          </motion.div>
+        </div>
+      </section>
     );
 }

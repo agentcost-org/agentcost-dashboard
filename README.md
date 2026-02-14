@@ -1,16 +1,18 @@
 # AgentCost Dashboard
 
-**Beautiful analytics dashboard for monitoring your LLM costs.**
+**Analytics dashboard for monitoring your LLM costs and managing projects.**
 
-A Next.js 14 application with App Router, Tailwind CSS, and Recharts for visualizing your AI spending.
-
-![Dashboard Preview](https://via.placeholder.com/800x400?text=AgentCost+Dashboard)
+A Next.js 14 application with App Router, Tailwind CSS, and Recharts for visualizing your AI spending and managing your projects.
 
 ## Features
 
 - **Real-time Analytics**: See costs, calls, and tokens at a glance
 - **Interactive Charts**: Cost trends, agent breakdowns, model usage
 - **Agent Insights**: Per-agent cost analysis
+- **Project Management**: Create and manage projects, invite team members
+- **User Authentication**: Secure login and registration
+- **Feedback System**: Submit and track feature requests
+- **File Attachments**: Upload and manage files
 - **Auto-Refresh**: Stay up-to-date with automatic data refresh
 - **Dark Mode**: Modern, eye-friendly design
 - **Responsive**: Works on desktop and mobile
@@ -76,14 +78,17 @@ src/
 
 ## Pages
 
-| Page     | URL         | Description                                |
-| -------- | ----------- | ------------------------------------------ |
-| Overview | `/`         | Main dashboard with key metrics and charts |
-| Agents   | `/agents`   | Per-agent cost breakdown and performance   |
-| Models   | `/models`   | Per-model usage and cost analysis          |
-| Events   | `/events`   | Real-time event log viewer                 |
-| Settings | `/settings` | API key and backend configuration          |
-| Docs     | `/docs/api` | API documentation                          |
+| Page         | URL             | Description                                |
+| ------------ | --------------- | ------------------------------------------ |
+| Overview     | `/`             | Main dashboard with key metrics and charts |
+| Projects     | `/projects`     | Project management and team collaboration  |
+| Agents       | `/agents`       | Per-agent cost breakdown and performance   |
+| Models       | `/models`       | Per-model usage and cost analysis          |
+| Events       | `/events`       | Real-time event log viewer                 |
+| Feedback     | `/feedback`     | Submit and track feature requests          |
+| Settings     | `/settings`     | User profile and API key configuration     |
+| Login        | `/login`        | User authentication                        |
+| Register     | `/register`     | User registration                          |
 
 ## Configuration
 
@@ -93,8 +98,8 @@ All configuration is done via environment variables:
 | --------------------- | -------------------------- | ----------------------- |
 | `NEXT_PUBLIC_API_URL` | Backend API URL            | `http://localhost:8000` |
 | `NEXT_PUBLIC_API_KEY` | Default API key (optional) | -                       |
-
-Users can also configure the API key in the Settings page, which persists to localStorage.
+| `NEXTAUTH_SECRET`     | NextAuth.js secret         | -                       |
+| `NEXTAUTH_URL`        | NextAuth.js URL            | `http://localhost:3000` |
 
 ## Technology Stack
 

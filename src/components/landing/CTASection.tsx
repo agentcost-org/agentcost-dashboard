@@ -54,7 +54,7 @@ export function CTASection() {
                 <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
               </Link>
               <a
-                href="https://github.com"
+                href="https://github.com/agentcost-ai/agentcost-sdk"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-7 py-3.5 text-sm font-medium text-neutral-400 hover:text-white border border-white/8 hover:border-white/15 rounded-xl transition-all duration-200 hover:bg-white/2"
