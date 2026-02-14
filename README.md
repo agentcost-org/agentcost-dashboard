@@ -167,4 +167,4 @@ npm run start
 
 ## Contributing
 
-See the main [CONTRIBUTING.md](../CONTRIBUTING.md) for guidelines.
+See the main [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
