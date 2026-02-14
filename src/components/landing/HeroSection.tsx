@@ -361,7 +361,7 @@ export function HeroSection() {
                 <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
               </Link>
               <Link
-                href="/docs"
+                href="/docs/sdk"
                 className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-neutral-400 hover:text-white border border-white/8 hover:border-white/15 rounded-xl transition-all duration-200 hover:bg-white/2"
               >
                 Documentation
