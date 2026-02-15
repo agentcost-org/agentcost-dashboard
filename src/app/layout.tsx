@@ -20,13 +20,37 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
-  title: "AgentCost - LLM Cost Analytics",
-  description: "Track and optimize your AI agent costs across OpenAI, Anthropic, LangChain, and 1900+ models",
+  title: "AgentCost - Real-time Cost Tracking for LangChain Agents",
+  description: "Track your LangChain agent costs in real-time. See which agents are expensive, get optimization suggestions. Free & open source.",
+  keywords: ["langchain", "ai cost tracking", "llm costs", "agent monitoring", "openai pricing"],
   icons: {
     icon: [
       { url: "/icon.svg", type: "image/svg+xml" },
     ],
   },
+  openGraph: {
+    type: "website",
+    url: "https://agentcost.tech/",
+    title: "AgentCost - Cost Tracking for LangChain Agents",
+    description: "Track your LangChain agent costs in real-time. Free & open source.",
+    images: [
+      {
+        url: "https://agentcost.tech/icon.svg",
+        alt: "AgentCost - Cost Tracking for LangChain Agents",
+      },
+    ],
+    siteName: "AgentCost",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AgentCost - Cost Tracking for LangChain Agents",
+    description: "Track your LangChain agent costs in real-time.",
+    images: ["https://agentcost.tech/icon.svg"],
+  },
+  alternates: {
+    canonical: "https://agentcost.tech/",
+  },
+  metadataBase: new URL("https://agentcost.tech"),
 };
 
 export default function RootLayout({
