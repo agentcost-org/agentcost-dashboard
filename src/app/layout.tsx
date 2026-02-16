@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Sora } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 
@@ -21,18 +22,24 @@ const sora = Sora({
 
 export const metadata: Metadata = {
   title: "AgentCost - Real-time Cost Tracking for LangChain Agents",
-  description: "Track your LangChain agent costs in real-time. See which agents are expensive, get optimization suggestions. Free & open source.",
-  keywords: ["langchain", "ai cost tracking", "llm costs", "agent monitoring", "openai pricing"],
+  description:
+    "Track your LangChain agent costs in real-time. See which agents are expensive, get optimization suggestions. Free & open source.",
+  keywords: [
+    "langchain",
+    "ai cost tracking",
+    "llm costs",
+    "agent monitoring",
+    "openai pricing",
+  ],
   icons: {
-    icon: [
-      { url: "/icon.svg", type: "image/svg+xml" },
-    ],
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
   },
   openGraph: {
     type: "website",
     url: "https://agentcost.tech/",
     title: "AgentCost - Cost Tracking for LangChain Agents",
-    description: "Track your LangChain agent costs in real-time. Free & open source.",
+    description:
+      "Track your LangChain agent costs in real-time. Free & open source.",
     images: [
       {
         url: "https://agentcost.tech/icon.svg",
@@ -71,6 +78,19 @@ export default function RootLayout({
         className={`${inter.variable} ${jetbrainsMono.variable} ${sora.variable} antialiased bg-neutral-950 text-neutral-100`}
         suppressHydrationWarning={true}
       >
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-KMLSX540HL"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-KMLSX540HL');
+          `}
+        </Script>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
