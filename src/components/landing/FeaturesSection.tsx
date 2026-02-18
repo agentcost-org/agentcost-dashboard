@@ -246,9 +246,9 @@ export function FeaturesSection() {
             Capabilities
           </p>
           <h2 className="text-3xl sm:text-[2.75rem] font-bold text-white leading-[1.15] tracking-tight">
-            Ship with confidence.
+            Everything you need to
             <br />
-            <span className="text-neutral-500">Know what it costs.</span>
+            <span className="text-neutral-500">control AI spend.</span>
           </h2>
         </motion.div>
 
@@ -271,9 +271,9 @@ export function FeaturesSection() {
                 as it&apos;s spent.
               </h3>
               <p className="text-sm text-neutral-500 leading-relaxed mb-8 max-w-sm">
-                Every LLM call is captured the instant it completes. No polling.
-                No batch delays. Costs appear in your dashboard before the
-                response reaches your user.
+                Every LLM call is captured the moment it completes.
+                Token counts, costs, and latency are recorded
+                and available in your dashboard in real time.
               </p>
               <LiveCostFeed />
             </div>
@@ -296,8 +296,9 @@ export function FeaturesSection() {
                 Zero refactoring.
               </h3>
               <p className="text-sm text-neutral-500 leading-relaxed mb-8 max-w-sm">
-                The SDK intercepts LLM calls transparently via monkey-patching.
-                Your agents, chains, and prompts stay exactly as they are.
+                The SDK intercepts LLM calls transparently. No wrappers,
+                no decorators. Your agents, chains, and prompts stay
+                exactly as they are.
               </p>
 
               {/* Code snippet with line numbers */}

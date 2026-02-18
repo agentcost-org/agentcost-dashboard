@@ -118,11 +118,10 @@ export function ArchitectureSection() {
               <button
                 key={s.id}
                 onClick={() => handleStepClick(i)}
-                className={`group relative text-left px-5 py-4 rounded-xl border transition-all duration-300 overflow-hidden ${
-                  active === i
+                className={`group relative text-left px-5 py-4 rounded-xl border transition-all duration-300 overflow-hidden ${active === i
                     ? "border-white/12 bg-white/4"
                     : "border-white/4 bg-transparent hover:border-white/8 hover:bg-white/2"
-                }`}
+                  }`}
               >
                 {/* Auto-advance progress bar */}
                 {active === i && isAutoPlaying && (
@@ -149,18 +148,16 @@ export function ArchitectureSection() {
 
                 <div className="flex items-center gap-3">
                   <span
-                    className={`text-xs font-mono transition-colors duration-200 ${
-                      active === i ? "text-sky-400" : "text-neutral-700"
-                    }`}
+                    className={`text-xs font-mono transition-colors duration-200 ${active === i ? "text-sky-400" : "text-neutral-700"
+                      }`}
                   >
                     {s.id}
                   </span>
                   <span
-                    className={`text-sm font-medium transition-colors duration-200 ${
-                      active === i
+                    className={`text-sm font-medium transition-colors duration-200 ${active === i
                         ? "text-white"
                         : "text-neutral-500 group-hover:text-neutral-300"
-                    }`}
+                      }`}
                   >
                     {s.title}
                   </span>

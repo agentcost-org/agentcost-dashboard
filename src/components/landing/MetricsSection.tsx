@@ -66,10 +66,10 @@ const stats = [
     accent: "from-emerald-400/20 via-emerald-400/5 to-transparent",
   },
   {
-    value: 2,
-    suffix: "",
-    label: "lines to integrate",
-    detail: "import, init — your existing code stays untouched",
+    value: 100,
+    suffix: "%",
+    label: "self-hosted",
+    detail: "Your data never leaves your infrastructure. No telemetry.",
     accent: "from-violet-400/20 via-violet-400/5 to-transparent",
   },
 ];
@@ -110,11 +110,10 @@ export function MetricsSection() {
                 duration: 0.8,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className={`relative flex flex-col ${
-                i % 2 === 0
+              className={`relative flex flex-col ${i % 2 === 0
                   ? "lg:items-start lg:text-left"
                   : "lg:items-end lg:text-right"
-              } items-center text-center`}
+                } items-center text-center`}
             >
               {/* Big number with counter animation */}
               <span className="text-6xl sm:text-7xl lg:text-8xl font-bold tracking-tighter text-white/90 font-mono leading-none mb-4">
