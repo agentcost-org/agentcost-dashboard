@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { parseApiError } from "@/lib/utils";
+import { api } from "@/lib/api";
 import { Checkbox } from "@/components/auth/AuthComponents";
 
 declare global {
@@ -57,6 +58,8 @@ function LoginContent() {
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [isResending, setIsResending] = useState(false);
+  const [resendSuccess, setResendSuccess] = useState(false);
   const googleButtonRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -136,6 +139,7 @@ function LoginContent() {
     e.preventDefault();
     setError(null);
     setSuccessMessage(null);
+    setResendSuccess(false);
     setIsLoading(true);
 
     try {
@@ -146,6 +150,22 @@ function LoginContent() {
       setIsLoading(false);
     }
   };
+
+  const handleResendVerification = async () => {
+    if (!email || isResending) return;
+    setIsResending(true);
+    setResendSuccess(false);
+    try {
+      await api.resendVerification(email);
+      setResendSuccess(true);
+    } catch {
+      setError("Failed to resend verification email. Please try again.");
+    } finally {
+      setIsResending(false);
+    }
+  };
+
+  const isEmailNotVerified = error?.toLowerCase().includes("verify your email");
 
   return (
     <div className="w-full max-w-100 px-6 py-16">
@@ -242,9 +262,24 @@ function LoginContent() {
           className="mb-6 p-4 bg-red-500/8 border border-red-500/15 rounded-xl flex items-start gap-3"
         >
           <AlertCircle className="w-4.5 h-4.5 text-red-400 shrink-0 mt-0.5" />
-          <span className="text-sm text-red-300/90 leading-relaxed">
-            {error}
-          </span>
+          <div className="text-sm leading-relaxed">
+            <span className="text-red-300/90">{error}</span>
+            {isEmailNotVerified && !resendSuccess && (
+              <button
+                type="button"
+                onClick={handleResendVerification}
+                disabled={isResending || !email}
+                className="mt-2 block text-white/80 hover:text-white underline underline-offset-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isResending ? "Sending..." : "Resend verification email"}
+              </button>
+            )}
+            {isEmailNotVerified && resendSuccess && (
+              <p className="mt-2 text-emerald-400">
+                Verification email sent. Please check your inbox.
+              </p>
+            )}
+          </div>
         </div>
       )}
 
